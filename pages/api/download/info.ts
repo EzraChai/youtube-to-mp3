@@ -9,11 +9,12 @@ export default async function handler(
   const body = JSON.parse(req.body);
   const url = body.url;
 
-  const info = await ytdl.getInfo(url);
-
-  let title = info.videoDetails.title;
-
-  title = title.replace(" ", "_");
-
-  res.status(200).json(title);
+  try {
+    const info = await ytdl.getInfo(url);
+    let title = info.videoDetails.title;
+    title = title.replace(" ", "_");
+    res.status(200).json(title);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 }

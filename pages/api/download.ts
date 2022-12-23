@@ -14,6 +14,9 @@ export default async function handler(
 ) {
   const body = JSON.parse(req.body);
   const url = body.url;
-
-  ytdl(url, { filter: "audioonly" }).pipe(res);
+  try {
+    ytdl(url, { filter: "audioonly" }).pipe(res);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 }
